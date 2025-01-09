@@ -1,0 +1,32 @@
+
+
+services:
+  postgres:
+    image: postgres
+    ports:
+      - ${PGPORT}:${PGPORT}
+ 
+    env_file:
+      - .env # Load the .env file into the container
+
+  app:
+
+    build:
+      context: .  # Path to the directory with your Dockerfile (current directory in this case)
+      dockerfile: dockerfile 
+      target: ${BUILDTYPE}
+    volumes:
+      - ./:/app
+    ports:
+      - "${APP_PORT}:${APP_PORT}" # Use variable from .env
+    environment:
+     DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:${PGPORT}/${POSTGRES_DB}?schema=public"
+    env_file:
+      - .env # Load the .env file into the container
+  
+  redis:
+    image: redis
+    ports:
+      - "${REDIS_PORT}:${REDIS_PORT}"
+    env_file:
+      - .env

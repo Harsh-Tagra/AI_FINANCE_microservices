@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "CommonJS",
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+   
+  },
+  
+  "include": ["./*.ts"],   // Include TypeScript files in the current directory
+  "exclude": ["node_modules", "dist"]
+}

@@ -1,0 +1,28 @@
+{
+  "name": "user_services",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/app.js",
+    "build": "npx prisma migrate   dev --name build  && tsc",
+    "dev": "npx prisma migrate   dev --name dev &&tsc-watch --onSuccess \"node dist/app.js\"  ",
+    "docker_dev": " BUILDTYPE=dev docker-compose up --build    ",
+    "docker_prod": " BUILDTYPE=production  docker-compose up --build   "
+
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^6.2.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "tsc-watch": "^6.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  }
+}

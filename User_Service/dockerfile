@@ -1,0 +1,24 @@
+
+FROM node AS build
+WORKDIR  /app 
+COPY  package.json package.json
+RUN  npm i 
+COPY . .
+RUN npm run build
+RUN npm remove tsc 
+RUN npm remove tsc-watch
+ENTRYPOINT ["npx", "prisma",  "migrate", "dev", "--name", "build"]
+
+
+FROM node AS production
+WORKDIR  /app
+COPY --from=build /app/dist . 
+COPY --from=build /app/prisma prisma 
+COPY --from=build /app/package.json . 
+RUN npm install --production
+ENTRYPOINT [ "node", "app.js"]
+ 
+FROM node AS dev
+WORKDIR  /app
+ENTRYPOINT ["npm", "run","dev"]
+
